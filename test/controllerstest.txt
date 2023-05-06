@@ -1,0 +1,19 @@
+
+
+  Product controller
+    getAllProductsController
+      ✔ Debe retornar array vacio si no hay productos cargados
+      ✔ Debe retornar todos los productos que hay cargados
+    getProductByIdController
+      ✔ Debe regresar el producto con la id indicada
+      ✔ Debe regresar el valor null ante un request con id incorrecto
+    delProductbyIdController
+      ✔ Debe borrar el producto con la id indicada
+      ✔ Debe regresar false cuando se intenta borrar un producto que no existe
+    newProductController
+      ✔ Debe retornar false si los datos del nuevo producto no son correctos
+      ✔ Debe retornar true si el producto se ha almacenado correctamente
+
+
+  8 passing (15ms)
+
