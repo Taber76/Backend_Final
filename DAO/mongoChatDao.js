@@ -2,6 +2,8 @@ const connectToDb = require('../config/connectToMongo')
 const { chatModel } = require('../schemas/mongoDbModel')
 const { normalizedData } = require('../normalize/normal')
 
+const { logger, loggererr } = require('../log/logger')
+
 
 class MongoChatDao { 
 
@@ -12,7 +14,7 @@ class MongoChatDao {
       return normalizedData(chatInDb.chat)
     
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err}`)
     }
   }
  
@@ -41,7 +43,7 @@ class MongoChatDao {
         )
       return
     } catch(err) {
-      console.log(`Error: ${err}`)
+      loggererr.error(`Error: ${err}`)
     }
   }
 

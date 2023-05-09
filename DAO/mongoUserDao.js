@@ -1,5 +1,5 @@
 const connectToDb = require('../config/connectToMongo')
-const { userModel } = require('../schemas/mongoDbModel')
+const { userModel, cartModel } = require('../schemas/mongoDbModel')
 
 const { logger, loggererr } = require('../log/logger')
 const bcrypt = require('bcrypt')
@@ -39,10 +39,10 @@ class MongoUserDao {
 
   async getUser( username ) {
     try {
-      await connectToDd()
-      const documentInDb = await this.schema.find({username: username})
+      await connectToDb()
+      const documentInDb = await userModel.findOne({username: username})
       return documentInDb ? documentInDb : null
-    } catch {
+    } catch(err) {
       loggererr.error(`Error: ${err} al intentar recuperar el usuario id:${username} de la base de datos`)
       return null
     }
@@ -54,7 +54,8 @@ class MongoUserDao {
       const documentInDb = await userModel.findOne({ username: userData.username })
       if ( documentInDb === null ) {
         const encriptedPassword = bcrypt.hashSync(userData.password, saltRounds)
-        const newUser = new userModel({
+       
+        const newUser = new userModel({ // nuevo usuario
           username: userData.username,
           password: encriptedPassword,
           name: userData.name,
@@ -66,6 +67,17 @@ class MongoUserDao {
         await newUser.save()
           .then(user => logger.info(`Se ha agregado a la base de datos elemento con id: ${user._id}`))
           .catch(err => loggererr.error(`Se ha produciodo error ${err} al intentar agregar un usuario a la base de datos`))
+        
+        const newCart = new cartModel({ // nuevo cart
+          username: userData.username,
+          products: [],
+          sendaddress: userData.address
+        })
+        await newCart.save()
+          .then(cart => logger.info(`Se ha agregado a la base de datos elemento con id: ${cart._id}`))
+          .catch(err => loggererr.error(`Se ha produciodo error ${err} al intentar agregar el cart de un usuario a la base de datos`)) 
+      
+
         return true
       } else {
         logger.warn(`El usuario ${userData.username} ya existe`)

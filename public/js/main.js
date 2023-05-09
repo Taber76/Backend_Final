@@ -4,26 +4,27 @@ const registerFormHtmlElement = document.querySelector('#registerForm')
 
 
 //-------------------------------------------------------------------------------------------------
+
 //--- SESSION
 async function main(){
-  const userData = await userLogged() // Si hay usuario logeado devuelve el username --> session.js
+  let userData = await userLogged() // Si hay usuario logeado devuelve el username --> session.js
   
-  if ( userData.username !== '' ) {
+  if ( userData !== null ) {
     const productsData = await allProducts()
-    console.log(userData)
-    logged( userData[0], productsData ) // genero vistas de usaurio logueado --> session.js
-    
+    logged( userData, productsData ) // genero vistas de usaurio logueado --> session.js
+   
   } else {
+    
     sessionUserHtmlElement.innerHTML = loginTemplate()
     const logUser = document.getElementById("logUser")
     const logPassword = document.getElementById("logPassword")
    
     //--login con usuario y contrasena ------------------------------------
-    document.getElementById("loginBtn").addEventListener("click", ev => { 
+    document.getElementById("loginBtn").addEventListener("click", async ( ev ) => { 
       if ( validateObject ({ usuario: logUser.value , clave: logPassword.value })) {
         toast('Debe completar todos los datos', "#f75e25", "#ff4000")   
       } else { 
-        fetch(`http://localhost:${location.port}/session/login/`, {
+        const response = await fetch(`http://localhost:${location.port}/session/login/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -33,20 +34,15 @@ async function main(){
             password: logPassword.value
           })
         })
-        .then((response) => response.json())
-        .then(async (data) => {
-          if ( Object.keys(data).length === 0){
-            toast("Error de autenticacion", "#f75e25", "#ff4000")
-          } else {
-            const productsData = await allProducts()
-            logged ( data[0], productsData ) // <-- session.js
-          }
-        }) 
-         
-        .catch(error => {
+        serverErrorTemplate(`POST - ${response.url} - ${response.statusText}`)
+        if (response.status === 401) {
           toast("Error de autenticacion", "#f75e25", "#ff4000")
-          console.error('Se produjo un error: ', error)
-        })
+        } else {
+          userData = await response.json()
+          const productsData = await allProducts()
+          logged( userData, productsData ) // genero vistas de usaurio logueado --> session.js
+        }
+      
       }
     })
     

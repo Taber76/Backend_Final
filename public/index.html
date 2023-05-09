@@ -22,9 +22,11 @@
 
   <!---->
   <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script defer src="js/templates.js"></script>
   <script defer src="js/uploadImage.js"></script>
   <script defer src="js/products.js"></script>
+  <script defer src="js/websocket.js"></script>
   <script defer src="js/session.js"></script>
   <script defer src="js/register.js"></script>
   <script type="module" defer src="js/main.js"></script>
@@ -34,7 +36,11 @@
 
 <body>
 
+  <div id="serverMsg"></div>
+
   <div id="sessionUser"></div>
+
+  <div id="userChat"></div>
 
   <div id="productList"></div>
  

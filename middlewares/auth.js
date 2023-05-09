@@ -57,7 +57,6 @@ passport.use(
   )
 )
 
-
 passport.serializeUser( function(user, done) {
   done(null, user.username)
 })
@@ -67,6 +66,7 @@ passport.deserializeUser( function(username, done) {
 })
 
 module.exports = passport
+
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (req.session.passport) {

@@ -4,20 +4,26 @@ const sessionRouter = Router()
 const passport = require('../middlewares/auth')
 
 const { logger, loggererr } = require('../log/logger')
-const { addUserController } = require('../controllers/usersController')
+const { addUserController, getUserController } = require('../controllers/usersController')
 
 
 /* ------------------ router session ----------------- */
 //--------------------- usuario logeado?
 sessionRouter.get(
   '/',
-  (req, res) => {
+  async (req, res) => {
     if (req.session.passport) {
-      logger.info(`Usuario ${req.session.passport.user} logeado`)
-      res.status(200).send({ user: req.session.passport.user })
+      const userData = await getUserController( req.session.passport.user )
+      if (userData) {
+        logger.info(`Usuario ${req.session.passport.user} logeado`)
+        res.status(200).send( userData)
+      } else {
+        logger.warn(`No se ha encontrado el usuario ${req.session.passport.user}`) 
+        res.status(401).send(null)
+      }
     } else {
-      logger.warn(`No hay usuario logeado`) 
-      res.status(401).send({ username: '' })
+      logger.info(`No hay usuario logeado`) 
+      res.status(401).send(null)
     }
   }
 )
@@ -27,9 +33,15 @@ sessionRouter.get(
 sessionRouter.post(
   '/login', 
   passport.authenticate('login'),
-  function(_, res) {
-    logger.info(`Autenticacion exitosa`)
-    res.status(200).send({ message: 'Autenticación exitosa.' })
+  async (req, res) => {
+    const userData = await getUserController( req.session.passport.user )
+    if (userData) {
+      logger.info(`Usuario ${req.session.passport.user} logeado`)
+      res.status(200).send(userData)
+    } else {
+      logger.warn(`No se pudieron recuperar los datos de ${req.session.passport.user} de la base de datos`)
+      res.status(401).json({ msg: 'No hay usuario logeado' })
+    }
   }
 )
 

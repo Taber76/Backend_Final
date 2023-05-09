@@ -1,4 +1,5 @@
 const { msgaccountsid, msgauthtoken, whatsappnumber } = require('../config/environment');
+const { logger, loggererr } = require('../log/logger')
 
 const client = require('twilio')(msgaccountsid, msgauthtoken);
 
@@ -9,7 +10,7 @@ module.exports.sendWhatsapp = async ( waMsg ) => {
         from: whatsappnumber,
         to: `whatsapp:${waMsg.to}`
     })
-    .then(message => console.log(message.sid))
+    .then(message => logger.info(message.sid))
 }
 
     

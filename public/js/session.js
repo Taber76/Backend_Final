@@ -1,30 +1,31 @@
 async function userLogged() { //verifica si hay usuario logeeado
   let userData
-  await fetch(`http://localhost:${location.port}/session/`, {
+  const response = await fetch(`http://localhost:${location.port}/session/`, {
     method: 'GET',
   })
-    .then((response) => response.json())
-    .then((data) => {
-      userData = data
-    })
-  return userData
+  if (response.status === 401) {
+    return null
+  }
+  userData = await response.json()
+    return userData
 }
 
 
 function userLoggedTemplates(userData, productsData ) { // genera las vistas para usuario logueado
   document.querySelector('#sessionUser').innerHTML = logOkTemplate( userData )
   document.querySelector('#productList').innerHTML = productsTable( productsData )
+  chatInit(userData.username)
 }
 
 
-async function cartView( userData, productsData ) { // muestra el carrito del usuario
+async function cartView( userData, productsData ) { // muestra el carrito del usuario y opcion de compra
   let userCart
-  await fetch(`http://localhost:${location.port}/api/carrito/${userData.username}`, {
+  await fetch(`http://localhost:${location.port}/api/cart`, {
     method: 'GET',
   })
   .then((response) => response.json())
   .then((data) => {
-      userCart = data.cart[0].cart
+      userCart = data.products
       document.getElementById("productList").innerHTML = cartViewTemplate( userCart, productsData )
       
       document.getElementById("homeBtn").addEventListener("click", ev => {
@@ -32,8 +33,8 @@ async function cartView( userData, productsData ) { // muestra el carrito del us
       })
       
       document.getElementById("buyBtn").addEventListener("click", async ev => {
-        await fetch(`http://localhost:${location.port}/api/carrito/compra/${userData.username}`, {
-          method: 'GET',
+        await fetch(`http://localhost:${location.port}/api/cart/order`, {
+          method: 'POST',
         })
         .then(() => {
           toast('Su compra ha sido realizada', "#00800", "#ff90ee90")
@@ -50,7 +51,7 @@ async function cartView( userData, productsData ) { // muestra el carrito del us
 
 
 
-async function userLogout( user ){ // cierra secion de usuario
+async function userLogout( user ){ // cierra sesion de usuario
   fetch(`http://localhost:${location.port}/session/logout/`, {
     method: 'POST',
   })
@@ -65,15 +66,15 @@ async function userLogout( user ){ // cierra secion de usuario
 }
 
 
-async function productAddToCart ( productId, username ) {
-  await fetch(`http://localhost:${location.port}/api/carrito/addproduct/`, {
+async function productAddToCart ( itemId, username ) { // agrega producto al carrito
+  await fetch(`http://localhost:${location.port}/api/cart/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username: username,
-      productId: productId
+      itemId: itemId,
+      number: 1
     })
   })
   toast('Producto agregado al carrito', "#00800", "#ff90ee90")

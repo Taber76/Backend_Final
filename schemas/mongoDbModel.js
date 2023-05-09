@@ -16,13 +16,13 @@ const productSchema = new Schema({
 const cartSchema = new Schema({
     username: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
-    products: { type: Array, required: true }, // [{ description:..., quant:..., id:... }]
+    products: { type: Array, required: true }, // [{ number:..., id:... }]
     sendaddress: { type: String, required: true },
 })
 
 const orderSchema = new Schema({
   timestamp: { type: Date, default: Date.now },
-  products: { type: Array, required: true }, // [{ description:..., quant:..., id:... }]
+  products: { type: Array, required: true }, // [{ number:..., id:... }]
   username: { type: String, required: true },
   sendaddress: { type: String, required: true },
   ordernumber: { type: Number, required: true },
@@ -43,7 +43,7 @@ const userSchema = new Schema({
 
 const chatSchema = new Schema({
   username: { type: String, required: true },
-  type: { type: String, default: 'usuario' }, // 'usuario' o 'sistema'
+  type: { type: String, default: 'user' }, // 'user' o 'assistant'
   timestamp: { type: Date, default: Date.now },
   body: { type: String, required: true } 
 })

@@ -9,45 +9,36 @@ const { logger, loggererr } = require('../log/logger')
 const { websocket } = require('../websocket/socketservice')
 
 const express = require('express')
-//--- Para servidor FORK & CLUSTER
 const cluster = require('cluster')
 const numCPUs = require('os').cpus().length
+const http = require('http')
+const socketIo = require('socket.io')
+const mongoStore = require('connect-mongo')
+const expressSession = require('express-session')
+
+const productRouter = require('../routes/productRouter')
+const cartRouter = require('../routes/cartRouter')
+const sessionRouter = require('../routes/sessionRouter')
+const infoRouter = require('../routes/infoRouter')
+
+const advancedOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
 
 
+// --------------------- SERVER
+const createServer = () => {
 
-//-------------------------- PROCESO BASE INICIO -------------------------------  
-//------------------------------------------------------------------------------
-const baseProcces = () => {
-
-  cluster.on('exit', (worker, code, signal) => {
-    console.log(`Proceso ${worker.process.pid} caido!`)
-    cluster.fork()
-  })
-
-  //--- Servicios Express
-  const expressSession = require('express-session')
-  const { Server: HttpServer } = require('http')
-  const { Server: Socket } = require('socket.io')
   const app = express()
-  const httpServer = new HttpServer(app)
-  const io = new Socket(httpServer)
-
-  //--- Routes
-  const productRouter = require('../routes/productRouter')
-  const sessionRouter = require('../routes/sessionRouter')
-  const infoRouter = require('../routes/infoRouter')
-
-  //--- Databases
-  const MongoStore = require('connect-mongo')
-  const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true }
-
- 
-  //--- Middlewares
+  const server = http.createServer(app)
+  const io = socketIo(server)
+   
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.static(staticFiles))
   app.use(expressSession({
-    store: MongoStore.create({
+    store: mongoStore.create({
       mongoUrl: mongocredentialsession,
       mongoOptions: advancedOptions
     }),
@@ -58,11 +49,9 @@ const baseProcces = () => {
       maxAge: 600000
     }
   }))
-  
- 
-  
+     
   //---------------------- SOCKET
- // websocket( io )
+  websocket( io )
 
   //---------------------- ROUTES
   //--- SESSION ROUTER 
@@ -70,6 +59,9 @@ const baseProcces = () => {
 
   //--- API REST ROUTER 
   app.use('/api', productRouter)
+
+  //--- CART ROUTER
+  app.use('/api', cartRouter)
 
   //--- INFO ROUTER
   app.use('/info', infoRouter)
@@ -80,48 +72,46 @@ const baseProcces = () => {
     res.send(`Ruta: ${req.url}, metodo: ${req.method} no implemantada`)
   })
 
-
-  //--- SERVER ON
-  let PORT = ( config.port) ? config.port : 8080 // puerto por defecto 8080
-
-  if ( config.mode === 'CLUSTER') { 
-    // para CLUSTER si la clave same es 1 crea un puerto para cada worker
-    PORT = config.same === 1 ? PORT + cluster.worker.id - 1 : PORT
-  } 
-
-  const server = httpServer.listen(PORT, () => {
-    console.log(`Servidor http escuchando en el puerto ${server.address().port}`)
-  })
-  server.on('error', error => loggererr.error(`Error en servidor ${error}`))
-  
+  return { server, io }
 }
-//------------------------------ PROCESO BASE FIN -----------------------------------  
-//-----------------------------------------------------------------------------------
 
 
 
-//---------------------------- LOGICA CLUSTER / FORK  -------------------------------
+//---------------------------- CLUSTER / FORK  -------------------------------
 
-if ( config.mode != 'CLUSTER' ) { 
-
-  //-- Servidor FORK
-  console.log('Server en modo FORK')
-  console.log('-------------------')
-  baseProcces()
-  } else { 
-
-    //-- Servidor CLUSTER   
-    if (cluster.isPrimary) {
-      console.log('Server en modo CLUSTER')
-      console.log('----------------------')
-      for (let i = 0; i < numCPUs; i++) { // creo tantos procesos como cpus tengo
-        cluster.fork()
-      }
-    } else {
-      baseProcces()
+const startCluster = () => {
+  if (cluster.isPrimary) {
+    logger.info('Server in CLUSTER mode')
+    logger.info('----------------------')
+    for (let i = 0; i < numCPUs; i++) {
+      cluster.fork()
     }
+  } else {
+    logger.info(`Worker ${cluster.worker.id} started`)
+    PORT = config.same === 1 ? PORT + cluster.worker.id - 1 : PORT
+    createServer().server.listen(PORT, () => {
+      logger.info(`Worker ${cluster.worker.id} listening on port ${PORT}`)
+    })
   }
+}
+
+const startFork = () => {
+  logger.info('Server in FORK mode')
+  logger.info('-------------------')
+  createServer().server.listen(PORT, () => {
+    logger.info(`Server listening on port ${PORT}`)
+  })
+}
 
 
+// MAIN
+
+let PORT = ( config.port ) ? config.port : 8080 // puerto por defecto 8080
+
+if (config.mode === 'CLUSTER') {
+  startCluster()
+} else {
+  startFork()
+}
 
 

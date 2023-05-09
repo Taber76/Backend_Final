@@ -46,3 +46,6 @@
 [2023-04-25T10:59:20.687] [ERROR] error - Producto id: 25 no encontrado
 [2023-05-05T14:41:01.836] [ERROR] error - Se ha produciodo error ReferenceError: password is not defined al intentar agregar un usuario a la base de datos
 [2023-05-05T14:45:57.221] [ERROR] error - Se ha produciodo error ReferenceError: object is not defined al intentar agregar un usuario a la base de datos
+[2023-05-08T10:24:05.725] [ERROR] error - Error: ReferenceError: connectToDd is not defined al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos
+[2023-05-08T10:35:02.174] [ERROR] error - Error: ReferenceError: connectToDd is not defined al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos
+[2023-05-08T10:42:09.378] [ERROR] error - Error: TypeError: Cannot read properties of undefined (reading 'find') al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos

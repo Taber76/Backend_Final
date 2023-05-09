@@ -258,13 +258,11 @@
 [2023-05-05T11:13:34.776] [WARN] default - Metodo PUT no autorizado
 [2023-05-05T11:14:07.650] [WARN] default - Metodo POST no autorizado
 [2023-05-05T11:15:00.042] [WARN] default - Metodo POST no autorizado
-[2023-05-05T11:15:14.180] [WARN] default - No hay usuario logeado
 [2023-05-05T11:15:14.274] [WARN] default - Ruta: /432, metodo: GET no implemantada
 [2023-05-05T11:16:16.517] [WARN] default - Ruta: /432, metodo: GET no implemantada
 [2023-05-05T11:18:40.182] [WARN] default - Ruta: /432, metodo: GET no implemantada
 [2023-05-05T11:19:00.835] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
 [2023-05-05T11:19:21.227] [WARN] default - Ruta: /432, metodo: GET no implemantada
-[2023-05-05T11:19:28.028] [WARN] default - No hay usuario logeado
 [2023-05-05T11:19:28.124] [WARN] default - Ruta: /432, metodo: GET no implemantada
 [2023-05-05T11:30:00.239] [WARN] default - Ruta: /432, metodo: GET no implemantada
 [2023-05-05T11:30:05.319] [WARN] default - Ruta: /432, metodo: GET no implemantada
@@ -274,14 +272,42 @@
 [2023-05-05T12:06:36.516] [WARN] default - Ruta: /js/googleauth.js, metodo: GET no implemantada
 [2023-05-05T12:06:50.495] [WARN] default - Ruta: /js/googleauth.js, metodo: GET no implemantada
 [2023-05-05T12:08:24.973] [WARN] default - Ruta: /js/googleauth.js, metodo: GET no implemantada
-[2023-05-05T12:10:19.185] [WARN] default - No hay usuario logeado
-[2023-05-05T12:15:38.112] [WARN] default - No hay usuario logeado
-[2023-05-05T12:17:35.329] [WARN] default - No hay usuario logeado
-[2023-05-05T12:18:06.640] [WARN] default - No hay usuario logeado
-[2023-05-05T12:42:12.266] [WARN] default - No hay usuario logeado
-[2023-05-05T14:34:17.034] [WARN] default - No hay usuario logeado
-[2023-05-05T14:38:08.723] [WARN] default - No hay usuario logeado
-[2023-05-05T14:45:32.619] [WARN] default - No hay usuario logeado
-[2023-05-05T14:48:11.277] [WARN] default - No hay usuario logeado
-[2023-05-05T15:08:46.451] [WARN] default - No hay usuario logeado
-[2023-05-05T15:19:13.657] [WARN] default - No hay usuario logeado
+[2023-05-08T10:24:05.726] [WARN] default - No se ha encontrado el usuario arnaldo@andre.com
+[2023-05-08T10:35:02.175] [WARN] default - No se ha encontrado el usuario arnaldo@andre.com
+[2023-05-08T10:42:09.382] [WARN] default - No se ha encontrado el usuario arnaldo@andre.com
+[2023-05-08T11:09:02.527] [WARN] default - Ruta: /undefined, metodo: GET no implemantada
+[2023-05-08T11:09:30.241] [WARN] default - Ruta: /undefined, metodo: GET no implemantada
+[2023-05-08T13:10:23.547] [WARN] default - Ruta: /api/carrito/arnaldo@andre.com, metodo: GET no implemantada
+[2023-05-08T13:10:49.612] [WARN] default - Ruta: /api/carrito/arnaldo@andre.com, metodo: GET no implemantada
+
+[2023-05-08T20:19:44.108] [WARN] default - Ruta: /api/carrito/arnaldo@andre.com, metodo: GET no implemantada
+[2023-05-08T20:20:58.571] [WARN] default - Ruta: /api/carrito/arnaldo@andre.com, metodo: GET no implemantada
+[2023-05-08T20:21:12.867] [WARN] default - Error: ReferenceError: getCartController is not defined al intentar recuperar el carrito.
+[2023-05-08T20:21:45.368] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar recuperar el carrito.
+[2023-05-08T20:22:21.795] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar recuperar el carrito.
+[2023-05-08T20:23:23.730] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar recuperar el carrito.
+[2023-05-08T20:23:57.152] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar recuperar el carrito.
+[2023-05-08T20:30:14.275] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar agregar el producto al carrito.
+[2023-05-08T20:30:15.104] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar agregar el producto al carrito.
+[2023-05-08T20:31:22.955] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar agregar el producto al carrito.
+[2023-05-08T20:32:58.776] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar agregar el producto al carrito.
+[2023-05-08T20:40:27.487] [WARN] default - Metodo POST no autorizado
+[2023-05-08T20:42:55.346] [WARN] default - Error: TypeError: cartModel.insert is not a function al intentar agregar el producto al carrito.
+[2023-05-08T20:56:45.626] [WARN] default - Error: ValidationError: sendaddress: Path `sendaddress` is required. al intentar agregar el producto al carrito.
+[2023-05-08T20:56:46.444] [WARN] default - Error: ValidationError: sendaddress: Path `sendaddress` is required. al intentar agregar el producto al carrito.
+[2023-05-08T20:56:46.782] [WARN] default - Error: ValidationError: sendaddress: Path `sendaddress` is required. al intentar agregar el producto al carrito.
+[2023-05-08T20:56:48.340] [WARN] default - Error: ValidationError: sendaddress: Path `sendaddress` is required. al intentar agregar el producto al carrito.
+[2023-05-08T21:05:43.925] [WARN] default - Error: TypeError: cartModel.insertOne is not a function al intentar agregar el producto al carrito.
+[2023-05-08T21:05:44.975] [WARN] default - Error: TypeError: cartModel.insertOne is not a function al intentar agregar el producto al carrito.
+[2023-05-09T09:02:21.811] [WARN] default - Ruta: /api/carrito/compra/gustavo@fring.com, metodo: GET no implemantada
+[2023-05-09T09:03:03.885] [WARN] default - Ruta: /api/carrito/compra/gustavo@fring.com, metodo: GET no implemantada
+[2023-05-09T09:03:23.812] [WARN] default - Ruta: /api/carrito/compra/gustavo@fring.com, metodo: GET no implemantada
+[2023-05-09T10:23:21.516] [WARN] default - Error: ReferenceError: newOrderController is not defined al intentar crear el pedido.
+[2023-05-09T10:24:53.070] [WARN] default - Error: TypeError: Cannot read properties of undefined (reading 'username') al intentar crear el pedido.
+[2023-05-09T10:46:03.099] [WARN] default - Error: CastError: Cast to date failed for value "[Function: now]" (type function) at path "timestamp" al intentar borrar el carrito.
+[2023-05-09T10:49:40.492] [WARN] default - Error: ReferenceError: getTimestamp is not defined al intentar borrar el carrito.
+[2023-05-09T10:50:00.669] [WARN] default - Error: ReferenceError: getTime is not defined al intentar borrar el carrito.
+[2023-05-09T10:50:31.930] [WARN] default - Error: TypeError: Date(...).getTime is not a function al intentar borrar el carrito.
+[2023-05-09T11:19:13.765] [WARN] default - Metodo GET no autorizado
+[2023-05-09T11:19:37.573] [WARN] default - Metodo GET no autorizado
+[2023-05-09T11:30:01.366] [WARN] default - Metodo GET no autorizado

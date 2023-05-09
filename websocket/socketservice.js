@@ -1,27 +1,35 @@
-const { newProductController, getAllProductsController } = require('../controllers/productsController')
-const { getAllChatsController, addChatMsgController } = require('../controllers/chatsController')
+
+const { logger, loggererr } = require('../log/logger')
+
+let mensajes = [
+  { type: 'system', body: 'Hola, como estas?' },
+  { type: 'user', body: 'Bien y tu?' },
+  { type: 'user', body: 'Mal' },
+  { type: 'system', body: 'Por favor, no te preocupes' },
+  { type: 'user', body: 'gracias' },
+]
 
 module.exports.websocket = ( io ) => {
+
+  // cargo todos los mensajes de chat del usuario
   io.on('connection', async socket => {
-    console.log('Nuevo cliente conectado!')
-  
-    //-- Tabla inicial al cliente
-    socket.emit('productos', await getAllProductsController())
-  
-    //-- Nuevo producto desde cliente
-    socket.on('update', async producto => {
-      await newProductController( producto )
-      io.sockets.emit('productos', await getAllProductsController())
+
+    socket.on('online', ( username ) => {
+      // cargo todos los mensajes de chat del usuario
+      socket.emit('mensajes', mensajes)
     })
-  
-    //-- Chat inicial al cliente
-    socket.emit('mensajes', await getAllChatsController())
-  
-    //-- Nuevo mensaje desde el cliente
-    socket.on('newMsj', async mensaje => {
-      mensaje.date = new Date().toLocaleString()
-      await addChatMsgController( mensaje ) 
-      io.sockets.emit('mensajes', await getAllChatsController())
+    
+
+    socket.on('mensaje', msg => {
+      // agrego un documento chat a la base de datos y al chat en memoria "user"
+      // pido respuesta de chtgpt
+      // agrego respuesta a la base de datos y al chat en memoria "assistant"
+      // envio chat al forntend
+      mensajes.push({
+        type: 'user',
+        body: msg
+      })
+      socket.emit('mensajes', mensajes)
     })
   })
 }

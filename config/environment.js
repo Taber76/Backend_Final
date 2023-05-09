@@ -29,3 +29,5 @@ module.exports.msgauthtoken = process.env.MSGAUTHTOKEN
 
 module.exports.persistence = process.env.PERSISTENCE
 module.exports.node_env = process.env.NODE_ENV
+
+module.exports.gptapikey = process.env.GPTAPIKEY
