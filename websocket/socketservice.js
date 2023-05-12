@@ -1,35 +1,36 @@
-
+const { getAllByUserController, addMessageController } = require('../controllers/chatsController')
+const { getAllProductsController } = require('../controllers/productsController')
+const { gptResponse } = require('../messages/chatgpt')
 const { logger, loggererr } = require('../log/logger')
 
-let mensajes = [
-  { type: 'system', body: 'Hola, como estas?' },
-  { type: 'user', body: 'Bien y tu?' },
-  { type: 'user', body: 'Mal' },
-  { type: 'system', body: 'Por favor, no te preocupes' },
-  { type: 'user', body: 'gracias' },
-]
+let allChat = []
 
-module.exports.websocket = ( io ) => {
 
-  // cargo todos los mensajes de chat del usuario
+module.exports.websocket = async ( io ) => {
+  
+  const products = await getAllProductsController()
+
   io.on('connection', async socket => {
 
-    socket.on('online', ( username ) => {
-      // cargo todos los mensajes de chat del usuario
-      socket.emit('mensajes', mensajes)
+    socket.on('online', async ( username ) => {
+      allChat = await getAllByUserController( username )
+      socket.emit('mensajes', allChat)
     })
     
 
-    socket.on('mensaje', msg => {
-      // agrego un documento chat a la base de datos y al chat en memoria "user"
-      // pido respuesta de chtgpt
-      // agrego respuesta a la base de datos y al chat en memoria "assistant"
-      // envio chat al forntend
-      mensajes.push({
+    socket.on('mensaje', async ( msg ) => {
+      allChat.push({
         type: 'user',
-        body: msg
+        body: msg.body
       })
-      socket.emit('mensajes', mensajes)
+      await addMessageController( msg.username, 'user', msg.body )
+      const assistantResponse = await gptResponse( allChat, products )
+      allChat.push({
+        type: 'assistant',
+        body: assistantResponse
+      })
+      await addMessageController( msg.username, 'assistant', assistantResponse )
+      socket.emit('mensajes', allChat)
     })
   })
 }

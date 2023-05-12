@@ -1,49 +1,36 @@
 const connectToDb = require('../config/connectToMongo')
 const { chatModel } = require('../schemas/mongoDbModel')
-const { normalizedData } = require('../normalize/normal')
+
 
 const { logger, loggererr } = require('../log/logger')
 
 
 class MongoChatDao { 
 
-  async getAll() {
+  async getAllByUser( username ) {
     try{
       await connectToDb()
-      const chatInDb = await chatModel.findOne ( { chatid: 'chat1'} )
-      return normalizedData(chatInDb.chat)
-    
+      const chatInDb = await chatModel.find({ username: username })
+      return chatInDb
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar recuperar el chat de la base de datos`)
     }
   }
  
 
-  async add( message ) {
+  async addMessage( username, type, body ) { // type: 'user' | 'assistant'
     try{
       await connectToDb()
-      const chatInDb = await chatModel.findOne ( { chatid: 'chat1' } )
-      const newMsj = chatInDb.chat
-      newMsj.push({
-        user: { 
-          email: message.author.id,
-          name: message.author.name,
-          surmame: message.author.surname,
-          age: message.author.age,
-          nickname: message.author.nickname,
-          avatar: message.author.avatar,
-        },
-        message: {
-          timestamp: message.date,
-          text: message.text
-          } 
+      const newMsj = new chatModel({
+        username: username,
+        type: type,
+        body: body
       })
-      await chatModel.updateOne({ chatid: 'chat1' },
-        { $set: { chat: newMsj }}
-        )
-      return
+      await newMsj.save()
+      return true
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar guardar el mensaje en la base de datos`)
+      return false
     }
   }
 

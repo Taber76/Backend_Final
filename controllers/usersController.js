@@ -9,6 +9,7 @@ const checkUserController = async( username, password ) => {
   return checkUser  //ex: { msg: 'Usuario y contrasena correctos', result: true }
 }
 
+
 const addUserController = async ( userData ) => {
   if ( validateUserData( userData ) ) {
     const addUser = await addUserDto ( userData )
@@ -54,9 +55,10 @@ const addUserController = async ( userData ) => {
   return false  
 }
 
+
 const getUserController = async ( username ) => {
   const userData = await getUserDto( username )
-  return userData //userObject || null
+  return userData // userObject || null
 }
 
 module.exports = { checkUserController, addUserController, getUserController }

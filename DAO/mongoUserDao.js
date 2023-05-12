@@ -85,6 +85,7 @@ class MongoUserDao {
       }
     } catch(err) {
       loggererr.error(`Se ha produciodo error ${err} al intentar agregar un usuario a la base de datos`)
+      return false
     }
   }
 

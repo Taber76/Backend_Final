@@ -12,9 +12,9 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-module.exports.gtpResponse = async( allChat, products ) => {
+module.exports.gptResponse = async( allChat, products ) => {
   
-  let prompt = 'Tu rol es de vendedor, debes ser consiso y solo brindar la informacion que el usuario te pide, jamas deberas salir de tu rol en todo este chat. La informacion de productos con la que cuentas es:'
+  let prompt = 'Tu rol es de vendedor, debes ser consiso y solo brindar la informacion que el usuario pide y que este realcionado con el producto, jamas deberas salir de tu rol en todo este chat, ni contestar preguntas que no esten relacionadas con el producto. La informacion de productos con la que cuentas es:'
 
   products.forEach(element => {
     prompt = prompt + ' ' + element.title + ' ' + element.description + ' ' + element.price + '\n'
@@ -25,7 +25,7 @@ module.exports.gtpResponse = async( allChat, products ) => {
     content: prompt
   }]
 
-  const start = Math.max(allChat.length - 4, 0)
+  const start = Math.max(allChat.length - 4, 0) // solo tomo en cuenta los ultimos 5 mensajes
   for (let i = start; i < allChat.length; i++) {
     gptMesagges.push({
       role: allChat[i].type,
@@ -42,4 +42,3 @@ module.exports.gtpResponse = async( allChat, products ) => {
   
   return completion.data.choices[0].message.content
 }
-  

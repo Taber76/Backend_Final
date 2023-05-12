@@ -49,3 +49,6 @@
 [2023-05-08T10:24:05.725] [ERROR] error - Error: ReferenceError: connectToDd is not defined al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos
 [2023-05-08T10:35:02.174] [ERROR] error - Error: ReferenceError: connectToDd is not defined al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos
 [2023-05-08T10:42:09.378] [ERROR] error - Error: TypeError: Cannot read properties of undefined (reading 'find') al intentar recuperar el usuario id:arnaldo@andre.com de la base de datos
+[2023-05-09T21:21:25.319] [ERROR] error - Error: CastError: Cast to ObjectId failed for value "63d288723314fbc76e3c31fa5" (type string) at path "_id" for model "Product"
+[2023-05-10T15:58:52.170] [ERROR] error - Error: CastError: Cast to ObjectId failed for value "64087a723fbf2aa4617905a14" (type string) at path "_id" for model "Product"
+[2023-05-11T12:02:01.276] [ERROR] error - Error en la ruta /productos/categoria/transporte, metodo GET: ReferenceError: getProductsByCategoryController is not defined

@@ -1,19 +1,17 @@
-const { getAllProductsDto, getProductByIdDto, delProductByIdDto, addNewProductDto, modifyProductByIdDto } = require('../DTO/productDto')
+const { 
+    getAllProductsDto,
+    getProductByIdDto,
+    getProductsByCategoryDto,
+    delProductByIdDto,
+    addNewProductDto,
+    modifyProductByIdDto
+  } = require('../DTO/productDto')
 
-
-const validateObject = ( objeto ) => { // retorna true si hay algun campo vacio
-  return Object.values(objeto).includes('')
-}
-
-
-const imageUrl = ( url ) => {
-  const ext = /(\.jpg|\.jpeg|\.png|\.gif)$/i
-  return ext.test( url )
-}
+const { validateProductData } = require('../controllers/valitationFunctions')
 
 
 const newProductController = async ( productToAdd ) => {
-  if ( !validateObject( productToAdd ) & imageUrl ( productToAdd.thumbnail )) {
+  if ( validateProductData( productToAdd ) ) {
     await addNewProductDto ( productToAdd )
     return true
   }
@@ -30,6 +28,11 @@ const getProductByIdController = async( id ) => {
   return product
 }
 
+const getProductsByCategoryController = async( category ) => {
+  const products = await getProductsByCategoryDto( category )
+  return products
+}
+
 const delProductByIdController = async( id ) => {
   const response = await delProductByIdDto( id )
   return response
@@ -41,4 +44,11 @@ const modifyProductByIdController = async( id, item ) => {
 }
 
 
-module.exports = { newProductController, getAllProductsController, getProductByIdController, delProductByIdController, modifyProductByIdController }
+module.exports = { 
+  newProductController,
+  getAllProductsController,
+  getProductByIdController,
+  getProductsByCategoryController,
+  delProductByIdController,
+  modifyProductByIdController
+}

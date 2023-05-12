@@ -4,7 +4,7 @@
 -----------------------------------------------------------------------------------------
 */
 
-const { config, staticFiles, mongocredentialsession } = require('../config/environment')
+const { config, staticFiles, mongocredentialsession, usersessiontime } = require('../config/environment')
 const { logger, loggererr } = require('../log/logger')
 const { websocket } = require('../websocket/socketservice')
 
@@ -15,7 +15,9 @@ const http = require('http')
 const socketIo = require('socket.io')
 const mongoStore = require('connect-mongo')
 const expressSession = require('express-session')
+const { engine } = require('express-handlebars')
 
+const path = require ("path")
 const productRouter = require('../routes/productRouter')
 const cartRouter = require('../routes/cartRouter')
 const sessionRouter = require('../routes/sessionRouter')
@@ -33,7 +35,12 @@ const createServer = () => {
   const app = express()
   const server = http.createServer(app)
   const io = socketIo(server)
+
+  app.set('views', path.resolve(__dirname, '../views'))
+  app.engine('hbs', engine({ extname: 'hbs' }))
+  app.set('view engine', 'hbs')
    
+  //---------------------- MIDDLEWARES
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.static(staticFiles))
@@ -46,7 +53,7 @@ const createServer = () => {
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 600000
+      maxAge: Number(usersessiontime)
     }
   }))
      
@@ -67,9 +74,14 @@ const createServer = () => {
   app.use('/info', infoRouter)
 
   //--- Rutas no implementadas
-  app.get('*', (req, res) => {
-    logger.warn(`Ruta: ${req.url}, metodo: ${req.method} no implemantada`)
-    res.send(`Ruta: ${req.url}, metodo: ${req.method} no implemantada`)
+  app.get('*', (req, res, next) => {
+    const fileExtension = path.extname(req.url)
+    if (fileExtension === '.ico') {
+      next()
+    } else {
+      logger.warn(`Ruta: ${req.url}, método: ${req.method} no implementada`)
+      res.send(`Ruta: ${req.url}, método: ${req.method} no implementada`)
+    }
   })
 
   return { server, io }
@@ -89,18 +101,26 @@ const startCluster = () => {
   } else {
     logger.info(`Worker ${cluster.worker.id} started`)
     PORT = config.same === 1 ? PORT + cluster.worker.id - 1 : PORT
-    createServer().server.listen(PORT, () => {
-      logger.info(`Worker ${cluster.worker.id} listening on port ${PORT}`)
-    })
+    try {
+      createServer().server.listen(PORT, () => {
+        logger.info(`Worker ${cluster.worker.id} listening on port ${PORT}`)
+      })
+    } catch (error) {
+      logger.error(`Error starting worker ${cluster.worker.id}: ${error}`)
+    }
   }
 }
 
 const startFork = () => {
   logger.info('Server in FORK mode')
   logger.info('-------------------')
-  createServer().server.listen(PORT, () => {
-    logger.info(`Server listening on port ${PORT}`)
-  })
+  try {
+    createServer().server.listen(PORT, () => {
+      logger.info(`Server listening on port ${PORT}`)
+    })
+  } catch (error) {
+    logger.error(`Error starting server: ${error}`)
+  }
 }
 
 
@@ -113,5 +133,3 @@ if (config.mode === 'CLUSTER') {
 } else {
   startFork()
 }
-
-

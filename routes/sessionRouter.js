@@ -2,6 +2,7 @@ const { Router } = require('express')
 const sessionRouter = Router() 
 
 const passport = require('../middlewares/auth')
+const { generateJwtToken } = require('../middlewares/auth')
 
 const { logger, loggererr } = require('../log/logger')
 const { addUserController, getUserController } = require('../controllers/usersController')
@@ -13,10 +14,11 @@ sessionRouter.get(
   '/',
   async (req, res) => {
     if (req.session.passport) {
-      const userData = await getUserController( req.session.passport.user )
+      let userData = await getUserController( req.session.passport.user )
       if (userData) {
         logger.info(`Usuario ${req.session.passport.user} logeado`)
-        res.status(200).send( userData)
+        userData = Object.assign({}, userData._doc, { token: generateJwtToken(req.session.passport.user) })
+        res.status(200).send(userData)
       } else {
         logger.warn(`No se ha encontrado el usuario ${req.session.passport.user}`) 
         res.status(401).send(null)
@@ -32,18 +34,20 @@ sessionRouter.get(
 //--------------------- post login user
 sessionRouter.post(
   '/login', 
-  passport.authenticate('login'),
+  passport.authenticate('login'/*, { session: false }*/),
   async (req, res) => {
-    const userData = await getUserController( req.session.passport.user )
+    let userData = await getUserController( req.body.username )
     if (userData) {
-      logger.info(`Usuario ${req.session.passport.user} logeado`)
+      logger.info(`Usuario ${req.body.username} logeado`)
+      userData = Object.assign({}, userData._doc, { token: generateJwtToken(req.session.passport.user) })
       res.status(200).send(userData)
     } else {
-      logger.warn(`No se pudieron recuperar los datos de ${req.session.passport.user} de la base de datos`)
+      logger.warn(`No se pudieron recuperar los datos de ${req.body.username} de la base de datos`)
       res.status(401).json({ msg: 'No hay usuario logeado' })
     }
   }
 )
+
 
 
 //--------------------- post login/register user with google
@@ -88,7 +92,7 @@ sessionRouter.post(
     req.session.destroy((err) => {
       if (err) {
         loggererr.error(`No se ha podido cerrar la sesion, error: ${error}`)
-        res.status(500).send(`Something terrible just happened!!!`)
+        res.redirect(`info/error/Error al intentar cerrar la session de usuario`)
       } else {
         logger.info(`Sesion cerrada.`)
         res.redirect('/')

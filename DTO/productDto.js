@@ -13,11 +13,18 @@ const getProductByIdDto = async( id ) => {
   return productById
 }
 
+const getProductsByCategoryDto = async( category ) => {
+  const products = await (await getDao()).products
+  const productByCategory = await products.getByCategory( category )
+  return productByCategory
+}
+
 const delProductByIdDto = async( id ) => {
   const products = await (await getDao()).products
   const response = await products.deleteById( id )
   return response
 }
+
 
 const delAllProductsDto = async() => {
   const products = await (await getDao()).products
@@ -38,5 +45,13 @@ const modifyProductByIdDto = async( id, item ) => {
 }
 
 
-module.exports = { getAllProductsDto, getProductByIdDto, delProductByIdDto, delAllProductsDto, addNewProductDto, modifyProductByIdDto }
+module.exports = { 
+  getAllProductsDto,
+  getProductByIdDto,
+  getProductsByCategoryDto,
+  delProductByIdDto,
+  delAllProductsDto,
+  addNewProductDto,
+  modifyProductByIdDto
+ }
 

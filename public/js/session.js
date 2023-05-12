@@ -20,8 +20,11 @@ function userLoggedTemplates(userData, productsData ) { // genera las vistas par
 
 async function cartView( userData, productsData ) { // muestra el carrito del usuario y opcion de compra
   let userCart
-  await fetch(`http://localhost:${location.port}/api/cart`, {
+  await fetch(`http://localhost:${location.port}/api/carrito`, {
     method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${userData.token}`
+    }
   })
   .then((response) => response.json())
   .then((data) => {
@@ -33,8 +36,11 @@ async function cartView( userData, productsData ) { // muestra el carrito del us
       })
       
       document.getElementById("buyBtn").addEventListener("click", async ev => {
-        await fetch(`http://localhost:${location.port}/api/cart/order`, {
+        await fetch(`http://localhost:${location.port}/api/carrito/order`, {
           method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${userData.token}`
+          }
         })
         .then(() => {
           toast('Su compra ha sido realizada', "#00800", "#ff90ee90")
@@ -67,10 +73,11 @@ async function userLogout( user ){ // cierra sesion de usuario
 
 
 async function productAddToCart ( itemId, username ) { // agrega producto al carrito
-  await fetch(`http://localhost:${location.port}/api/cart/`, {
+  await fetch(`http://localhost:${location.port}/api/carrito/`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userData.token}`
     },
     body: JSON.stringify({
       itemId: itemId,

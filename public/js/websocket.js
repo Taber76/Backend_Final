@@ -4,12 +4,12 @@ const socket = io.connect()
 function chatInit( username ) {
   document.querySelector('#userChat').innerHTML = templateContainer()
   socket.emit('online', username)
-  socket.on('mensajes', data => {
-    document.querySelector('#chatContainer').innerHTML = chatMessages( data )})
+  socket.on('mensajes', allChat => {
+    document.querySelector('#chatContainer').innerHTML = chatMessages( allChat )})
 
   const chatMsg = document.querySelector('#chatUserMessage')
   document.querySelector('#sendChat').addEventListener("click", ev => {
-    socket.emit('mensaje', chatMsg.value )
+    socket.emit('mensaje', { username: username, body: chatMsg.value })
     chatMsg.value = ''
   })
 
@@ -56,7 +56,7 @@ function templateUserChat( msg ) {
 function chatMessages ( data ) {
   let allChat = ''
   data.forEach( msg => {
-    msg.type === 'system' 
+    msg.type === 'assistant' 
       ? allChat += templateSystemChat( msg.body )
       : allChat += templateUserChat( msg.body )
   })

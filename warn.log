@@ -311,3 +311,47 @@
 [2023-05-09T11:19:13.765] [WARN] default - Metodo GET no autorizado
 [2023-05-09T11:19:37.573] [WARN] default - Metodo GET no autorizado
 [2023-05-09T11:30:01.366] [WARN] default - Metodo GET no autorizado
+[2023-05-09T21:14:51.107] [WARN] default - Metodo GET no autorizado
+[2023-05-09T21:15:03.734] [WARN] default - Metodo GET no autorizado
+[2023-05-09T21:16:17.264] [WARN] default - Ruta: /api/carritoio, metodo: GET no implemantada
+[2023-05-09T21:16:24.320] [WARN] default - Metodo GET no autorizado
+[2023-05-09T21:21:25.320] [WARN] default - Producto id: 63d288723314fbc76e3c31fa5 no encontrado
+[2023-05-10T15:58:52.171] [WARN] default - Producto id: 64087a723fbf2aa4617905a14 no encontrado
+[2023-05-10T16:02:30.410] [WARN] default - Error: CastError: Cast to ObjectId failed for value "64087a723fbf2aa4617905a14" (type string) at path "_id" for model "Product" al intentar recuperar el producto.
+[2023-05-10T16:02:30.412] [WARN] default - Producto id: 64087a723fbf2aa4617905a14 no encontrado
+[2023-05-10T16:11:06.821] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-10T16:11:47.985] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T10:50:40.755] [WARN] default - Error: ReferenceError: adminmail is not defined al intentar crear el pedido.
+[2023-05-11T12:01:47.395] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:02:01.391] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:03:29.663] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:03:36.672] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:03:58.897] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:49:58.361] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:53:29.223] [WARN] default - Ruta: /public/images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:55:08.557] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T12:55:38.730] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:05:48.954] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:06:31.094] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:10:46.993] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:11:36.742] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:17:23.251] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:21:03.372] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:22:15.422] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:22:19.861] [WARN] default - Ruta: /favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:22:28.405] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:22:37.398] [WARN] default - Ruta: /images/favicon.ico, metodo: GET no implemantada
+[2023-05-11T13:57:37.695] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T13:57:44.307] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T13:58:12.979] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T13:58:19.437] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T13:59:20.806] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T13:59:41.508] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:00:17.473] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:00:53.502] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:00:55.526] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:00:58.471] [WARN] default - Ruta: /info/info/:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:01:34.825] [WARN] default - Ruta: /:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-11T14:01:56.996] [WARN] default - Ruta: /:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
+[2023-05-12T10:49:14.254] [WARN] default - Ruta: /undefined, método: GET no implementada
+[2023-05-12T10:49:37.562] [WARN] default - Ruta: /undefined, método: GET no implementada

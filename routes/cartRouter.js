@@ -3,15 +3,15 @@ const cartRouter = Router()
 
 const { getCartController, addProductToCartController, delProductFromCartController, delCartController, newOrderController } = require('../controllers/cartController')
 const { logger, loggererr } = require('../log/logger')
-const { isLoggedIn } = require('../middlewares/auth')
+const passport = require('../middlewares/auth')
 
 
 
 /* ------------------ router cart ----------------- */
 //------------- get user cart
 cartRouter.get(
-  '/cart',
-  isLoggedIn,
+  '/carrito',
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const cart = await getCartController( req.session.passport.user )
@@ -26,8 +26,8 @@ cartRouter.get(
 
 //------------- add product to cart
 cartRouter.post(
-  '/cart',
-  isLoggedIn,
+  '/carrito',
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const added = await addProductToCartController( req.body.itemId, req.body.number, req.session.passport.user )
@@ -42,8 +42,8 @@ cartRouter.post(
 
 //------------- delete product from cart
 cartRouter.delete(
-  '/cart/:id',
-  isLoggedIn,
+  '/carrito/:id',
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const deleted = await delProductFromCartController( req.params.id, req.session.passport.user )
@@ -59,8 +59,8 @@ cartRouter.delete(
 
 //------------- delete cart
 cartRouter.delete(
-  '/cart',
-  isLoggedIn,
+  '/carrito',
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const deleted = await delCartController( req.session.passport.user )
@@ -76,8 +76,8 @@ cartRouter.delete(
 
 //------------- new order
 cartRouter.post(
-  '/cart/order',
-  isLoggedIn,
+  '/carrito/order',
+  passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
       const order = await newOrderController( req.session.passport.user )

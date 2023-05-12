@@ -9,10 +9,10 @@ class MongoProductDao {
   async getAll() {
     try{
       await connectToDb()
-      const documentsInDb = await productModel.find()
+      const documentsInDb = await productModel.find({active: true})
       return documentsInDb
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar recuperar los productos.`)
     }
   }
  
@@ -24,30 +24,27 @@ class MongoProductDao {
       return documentInDb ? documentInDb : null
 
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar recuperar el producto.`)
     }
   }
 
-
-  async deleteById( id ) {  
+  async getByCategory( category ) {
     try {
       await connectToDb()
-      await productModel.deleteOne({ _id: id })
+      const documentInDb = await productModel.find({category: category})
+      return documentInDb ? documentInDb : null
+    } catch(err) {
+      logger.warn(`Error: ${err} al intentar recuperar los productos.`)
+    }
+  }
+
+  async deleteById( id ) {  // REVISAR DELETE
+    try {
+      await connectToDb()
+      await productModel.updateOne({ _id: id }, { $set: { active: false } })
       return true
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
-      return false
-    }
-  }
-
-
-  async deleteAll() {
-    try {
-      await connectToDb()
-      await productModel.deleteMany()
-      return 
-    } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar borrar el producto.`)
       return false
     }
   }
@@ -62,7 +59,7 @@ class MongoProductDao {
         .catch(err => loggererr.error(err))
       return
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar agregar el producto.`)
     }
   }
 
@@ -79,12 +76,11 @@ class MongoProductDao {
         return false
       }
     } catch(err) {
-      loggererr.error(`Error: ${err}`)
+      logger.warn(`Error: ${err} al intentar actualizar el producto.`)
       return false
     }
   }
   
-
 
 
 }

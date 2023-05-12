@@ -13,6 +13,9 @@ module.exports.staticFiles = process.env.STATICFILES
 
 module.exports.mongocredentialsession = process.env.MONGOCREDENTIALSESSION
 module.exports.mongocredentialsecommerce = process.env.MONGOCREDENTIALSECOMMERCE
+module.exports.usersessiontime = process.env.USERSESSIONTIME
+module.exports.jwtsecretkey = process.env.JWTSECRETKEY
+module.exports.jwtexpires = process.env.JWTEXPIRES
 
 module.exports.firebaseurl = process.env.FIREBASEURL
 

@@ -1,4 +1,4 @@
-const { normalizedData } = require('../normalize/normal')
+
 
 
 class MemoryChatDao { // MongoDB
