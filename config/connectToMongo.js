@@ -13,7 +13,7 @@ const connectToDb = async () => {
           isConected = true
           logger.info('MongoDB Connected...')
         })
-        .catch(err => loggererr.error(err))   
+        .catch(err => loggererr.error(`Ecommerce MongoDB ${err}`))   
     return
   }
 

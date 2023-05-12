@@ -20,6 +20,7 @@ const { engine } = require('express-handlebars')
 const path = require ("path")
 const productRouter = require('../routes/productRouter')
 const cartRouter = require('../routes/cartRouter')
+const chatRouter = require('../routes/chatRouter.js')
 const sessionRouter = require('../routes/sessionRouter')
 const infoRouter = require('../routes/infoRouter')
 
@@ -44,19 +45,23 @@ const createServer = () => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(express.static(staticFiles))
-  app.use(expressSession({
-    store: mongoStore.create({
-      mongoUrl: mongocredentialsession,
-      mongoOptions: advancedOptions
-    }),
-    secret: 'secret-pin',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: Number(usersessiontime)
-    }
-  }))
-     
+  try {
+    app.use(expressSession({
+      store: mongoStore.create({
+        mongoUrl: mongocredentialsession,
+        mongoOptions: advancedOptions
+      }),
+      secret: 'secret-pin',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: Number(usersessiontime)
+      }
+    }))
+  } catch (error) {
+    logger.error(`Error en la conexion a la base de datos: ${error}`)  
+  } 
+
   //---------------------- SOCKET
   websocket( io )
 
@@ -69,6 +74,9 @@ const createServer = () => {
 
   //--- CART ROUTER
   app.use('/api', cartRouter)
+
+  //--- CHAT ROUTER
+  app.use('/api', chatRouter)
 
   //--- INFO ROUTER
   app.use('/info', infoRouter)

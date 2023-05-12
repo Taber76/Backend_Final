@@ -72,17 +72,13 @@ async function userLogout( user ){ // cierra sesion de usuario
 }
 
 
-async function productAddToCart ( itemId, username ) { // agrega producto al carrito
-  await fetch(`http://localhost:${location.port}/api/carrito/`, {
+async function productAddToCart ( itemId, userData ) { // agrega producto al carrito
+  await fetch(`http://localhost:${location.port}/api/carrito?itemId=${itemId}&number=1`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${userData.token}`
-    },
-    body: JSON.stringify({
-      itemId: itemId,
-      number: 1
-    })
+    }
   })
   toast('Producto agregado al carrito', "#00800", "#ff90ee90")
   return 
@@ -95,7 +91,7 @@ function logged( userData, productsData ){ //ejecuta las acciones necesarias lue
   document.getElementById("productList").addEventListener("click", ev => {
     const productId = ev.target.id
     if ( productId.length == 24 ) {
-      productAddToCart( productId, userData.username )
+      productAddToCart( productId, userData )
     }
   })
 

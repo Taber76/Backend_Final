@@ -355,3 +355,26 @@
 [2023-05-11T14:01:56.996] [WARN] default - Ruta: /:Error%20al%20intentar%20cerrar%20la%20session%20de%20usuario., método: GET no implementada
 [2023-05-12T10:49:14.254] [WARN] default - Ruta: /undefined, método: GET no implementada
 [2023-05-12T10:49:37.562] [WARN] default - Ruta: /undefined, método: GET no implementada
+[2023-05-12T12:22:16.166] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:22:17.538] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:23:09.803] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:23:39.532] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:24:48.688] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:25:07.029] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:25:14.338] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:27:02.909] [WARN] default - Error: CastError: Cast to number failed for value "undefined" (type undefined) at path "products.$" al intentar agregar el producto al carrito.
+[2023-05-12T12:27:39.603] [WARN] default - Error: MongoServerError: Cannot increment with non-numeric argument: {products.$.number: "1"} al intentar agregar el producto al carrito.
+[2023-05-12T12:49:33.061] [WARN] default - Ruta: /api/chat/brigitte@bardot.com, método: GET no implementada
+[2023-05-12T12:59:35.477] [WARN] default - Error: Error: Request failed with status code 401 al intentar agregar el mensaje.
+[2023-05-12T13:02:24.027] [WARN] default - Error: Error: Request failed with status code 401 al intentar agregar el mensaje.
+[2023-05-12T13:02:38.056] [WARN] default - Error: Error: Request failed with status code 401 al intentar agregar el mensaje.
+[2023-05-12T13:03:26.357] [WARN] default - Ruta: /api/chat/brigitte@bardot.com, método: GET no implementada
+[2023-05-12T13:05:43.028] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:07:08.877] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:08:01.930] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:08:30.218] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:13:27.435] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:14:17.899] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:15:02.523] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:16:17.532] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-12T13:16:27.811] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object

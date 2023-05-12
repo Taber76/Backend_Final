@@ -1,37 +1,30 @@
-# Backend-Testeo-Funcionalidades
+# Backend-Entrega-Final
 
 ## Consigna
-1) Revisar en forma completa el proyecto entregable que venimos realizando, refactorizando y reformando todo lo necesario para llegar al esquema de servidor API RESTful en capas planteado en esta clase.
-2) Asegurarse de dejar al servidor bien estructurado con su ruteo / controlador, negocio, validaciones, persistencia y configuraciones (preferentemente utilizando en la codificación clases de ECMAScript).
+Desarrollar backend para ecommerce implementado como API RESTful
 
-### No hace falta realizar un cliente ya que utilizaremos tests para verificar el correcto funcionamiento de las funcionalidades desarrolladas.
-### AXIOS
-3) Desarrollar un cliente HTTP de pruebas que utilice Axios para enviar peticiones, y realizar un test de la funcionalidad hacia la API Rest de productos, verificando la correcta lectura de productos disponibles, incorporación de nuevos productos, modificación y borrado.
-4) Realizar el cliente en un módulo independiente y desde un código aparte generar las peticiones correspondientes, revisando los resultados desde la base de datos y en la respuesta del servidor obtenida en el cliente HTTP.
-
-### MOCHA 
-5) Luego, realizar las mismas pruebas, a través de un código de test apropiado, que utilice mocha, chai y Supertest, para probar cada uno de los métodos HTTP de la API Rest de productos.
-6) Escribir una suite de test para verificar si las respuestas a la lectura, incorporación, modificación y borrado de productos son las apropiadas. Generar un reporte con los resultados obtenidos de la salida del test.
-
-
-
-## Entrega
-La estructura del servidor es la siguiente:
-**DAO || DTO || Controller || Route || Server**.
-
-### AXIOS
-En la carpeta _AXIOS se ha implementado el script axios.js que puede realizar las siguientes peticiones:
-#### method: 'post', url: `http://localhost:8080/api/productos/nuevo`
-#### method: 'get', url: `http://localhost:8080/api/productos`
-#### method: 'put', url: `http://localhost:8080/api/productos/${id}`
-#### method: 'delete', url: `http://localhost:8080/api/productos/${id}`
-
-### MOCHA || CHAI || SUPERTEST
-#### CHAI
-Se ha implementado /test/controllers.products.test.js para testear las funciones controller: **getAllProductsController, newProductController, getProductByIdController y delProductByIdController.**
-Se ha generado un reporte /test/controllerstest.txt con el comando "npx mocha > ./test/controllerstest.txt"
-
-#### CHAI + SUPERTEST
-Se ha implementado /test/integration/api.products.test.js para generar las peticiones HTTP a la api de productos.
-Se ha generado el reporte /test/integration/supertest.txt con el comando "npm test"
-  
+## Implementacion
+### Caracteristicas principales
+- Framework **Express**.
+- Servidor parametrizable mediante linea de comandos y archivo externo (puerto, tipo de persistencia, modo cluster o fork, etc.).
+- Estructura de capas **DAO || DTO || Controller || Route || Server**.
+- Persistencia **MongoDB** con cinco colecciones: **users, products, cart, orders y chat**.
+- Manejo de session con **Passport-Local** y **Passport-JWT**.
+- Canal de chat implementado con **Websocket**.
+- Aviso por email al administrador.
+- Vista de informacion de configuracion y de errores implementada con **Handlebars**.
+### Frontend
+Se ha implementado un frontend sencillo que permite interactuar con la mayoria de los metodos implementados en el servidor.
+### Rutas
+#### USERS
+**GET: /session** Verifica si hay una sesion LocalPassport activa y devuelve los datos de usuario y un JWT.
+**POST: /session/login** Recibe usuario y clave, inicia session LocalPassport y devuelve los datos de usuario y un JWT.
+**POST: /session/register** Recibe los datos de usuarios y los almacena en la base de datos.
+**POST: /session/logout** Cierra session de LocalPassport.
+#### PRODUCTS
+**GET: /api/productos** Devuelve todos los productos almacenados en la base de datos.
+**GET: /api/productos/:id** Devuelve el producto con la id indicada.
+**GET: /api/productos/categoria/:category** Devuelve todos los productos de la categoria indicada.
+**POST: /api/productos/nuevo** Almacena los datos del producto en la base de datos (requiere JWT).
+**PUT: /api/productos/:id** Modifica los datos del producto id (requiere JWT).
+**DELETE: /api/productos/:id** Cambia el status "active" del producto a "false" (requiere JWT).

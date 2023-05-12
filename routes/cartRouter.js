@@ -19,7 +19,7 @@ cartRouter.get(
       res.status(200).send( cart )
     } catch (error) {
       logger.warn(`Error: ${error} al intentar recuperar el carrito.`)
-      res.status(500).send( error )
+      res.redirect(`info/error/Error al intentar recuperar el carrito: ${error}`)
     }
   }
 )
@@ -30,12 +30,12 @@ cartRouter.post(
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      const added = await addProductToCartController( req.body.itemId, req.body.number, req.session.passport.user )
+      const added = await addProductToCartController( req.query.itemId,  parseInt(req.query.number), req.session.passport.user )
       logger.info(`Ruta: /api${req.url}, metodo: ${req.method}`)
       res.status(200).send( added )
     } catch (error) {
       logger.warn(`Error: ${error} al intentar agregar el producto al carrito.`)
-      res.status(500).send( error )
+      res.redirect(`info/error/Error al intentar agregar el producto al carrito: ${error}`)
     }
   }
 )
@@ -51,7 +51,7 @@ cartRouter.delete(
       res.status(200).send( deleted )
     } catch (error) {
       logger.warn(`Error: ${error} al intentar borrar el producto del carrito.`)
-      res.status(500).send( error )
+      res.redirect(`info/error/Error al intentar borrar el producto del carrito: ${error}`)
     }
   }
 )
@@ -68,7 +68,7 @@ cartRouter.delete(
       res.status(200).send( deleted )
     } catch (error) {
       logger.warn(`Error: ${error} al intentar borrar el carrito.`)
-      res.status(500).send( error )
+      res.redirect(`info/error/Error al intentar borrar el carrito: ${error}`)
     }
   }
 )
@@ -85,7 +85,7 @@ cartRouter.post(
       res.status(200).send( order )
     } catch (error) {
       logger.warn(`Error: ${error} al intentar crear el pedido.`)
-      res.status(500).send( error )
+      res.redirect(`info/error/Error al intentar crear el pedido: ${error}`)
     }
   }
 )

@@ -27,7 +27,7 @@ productRouter.get(
       res.status(200).json( products )
     } catch (error) {
       logger.warn(`Error en la ruta ${req.url}, metodo ${req.method}: ${error}`)
-      res.status(500).json({ error: 'Error interno en el servidor' })
+      res.redirect(`info/error/Error del servidor en la ruta ${req.url}, metodo ${req.method}: ${error}`)
     }
   }
 )
@@ -47,7 +47,7 @@ productRouter.get(
       }
     } catch (error) {
       loggererr.error(`Error en la ruta ${req.url}, metodo ${req.method}: ${error}`)
-      res.status(500).json({ error: 'Error interno en el servidor' })
+      res.redirect(`info/error/Error del servidor en la ruta ${req.url}, metodo ${req.method}: ${error}`)
     }
   }
 )
@@ -55,10 +55,10 @@ productRouter.get(
 
 //------------ get producto segun id
 productRouter.get(
-  '/productos/categoria/:categoria',
+  '/productos/categoria/:category',
   async (req, res) => {
     try {
-      const products = await getProductsByCategoryController(req.params.categoria)
+      const products = await getProductsByCategoryController(req.params.category)
       if (products) {
         res.json( products )
       } else {
@@ -67,7 +67,7 @@ productRouter.get(
       }
     } catch (error) {
       loggererr.error(`Error en la ruta ${req.url}, metodo ${req.method}: ${error}`)
-      res.status(500).json({ error: 'Error interno en el servidor' })
+      res.redirect(`info/error/Error del servidor en la ruta ${req.url}, metodo ${req.method}: ${error}`)
     }
   }
 )
@@ -90,7 +90,7 @@ productRouter.post(
       }
     } catch (error) {
       loggererr.error(`Error en la ruta ${req.url}, metodo ${req.method}: ${error}`)
-      res.status(500).json({ error: 'Error interno en el servidor' })
+      res.redirect(`info/error/Error del servidor en la ruta ${req.url}, metodo ${req.method}: ${error}`)
     }
   }
 )
@@ -112,7 +112,7 @@ productRouter.put(
       }
     } catch (error) {
       loggererr.error(`Error en la ruta ${req.url}, metodo ${req.method}: ${error}`)
-      res.status(500).json({ error: 'Error interno en el servidor' })
+      res.redirect(`info/error/Error del servidor en la ruta ${req.url}, metodo ${req.method}: ${error}`)
     }
   }
 )

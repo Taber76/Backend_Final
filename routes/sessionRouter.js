@@ -34,7 +34,7 @@ sessionRouter.get(
 //--------------------- post login user
 sessionRouter.post(
   '/login', 
-  passport.authenticate('login'/*, { session: false }*/),
+  passport.authenticate('login'),
   async (req, res) => {
     let userData = await getUserController( req.body.username )
     if (userData) {
@@ -43,7 +43,7 @@ sessionRouter.post(
       res.status(200).send(userData)
     } else {
       logger.warn(`No se pudieron recuperar los datos de ${req.body.username} de la base de datos`)
-      res.status(401).json({ msg: 'No hay usuario logeado' })
+      res.redirect(`info/error/Error al intentar obtener datos de sesion de usuario: ${req.body.username}`)
     }
   }
 )
@@ -91,8 +91,8 @@ sessionRouter.post(
   async (req, res) => {
     req.session.destroy((err) => {
       if (err) {
-        loggererr.error(`No se ha podido cerrar la sesion, error: ${error}`)
-        res.redirect(`info/error/Error al intentar cerrar la session de usuario`)
+        loggererr.error(`No se ha podido cerrar la sesion, error: ${err}`)
+        res.redirect(`info/error/Error al intentar cerrar la session de usuario: ${err}`)
       } else {
         logger.info(`Sesion cerrada.`)
         res.redirect('/')

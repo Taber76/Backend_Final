@@ -22,14 +22,22 @@ module.exports.websocket = async ( io ) => {
       allChat.push({
         type: 'user',
         body: msg.body
-      })
-      await addMessageController( msg.username, 'user', msg.body )
-      const assistantResponse = await gptResponse( allChat, products )
-      allChat.push({
-        type: 'assistant',
-        body: assistantResponse
-      })
-      await addMessageController( msg.username, 'assistant', assistantResponse )
+      })     
+      try {
+        const assistantResponse = await gptResponse( allChat, products )
+        allChat.push({
+          type: 'assistant',
+          body: assistantResponse
+        })
+        await addMessageController( msg.username, 'user', msg.body )
+        await addMessageController( msg.username, 'assistant', assistantResponse )
+      } catch (error) {
+        allChat.push({
+          type: 'assistant',
+          body: '**ERROR** en el asistente virtual'
+        })
+        logger.warn(`Error: ${error} al intentar agregar el mensaje.`)
+      }
       socket.emit('mensajes', allChat)
     })
   })
