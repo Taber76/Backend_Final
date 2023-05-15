@@ -12,7 +12,6 @@ async function main(){
   if ( userData !== null ) {
     const productsData = await allProducts()
     logged( userData, productsData ) // genero vistas de usaurio logueado --> session.js
-   
   } else {
     
     sessionUserHtmlElement.innerHTML = loginTemplate()
@@ -34,7 +33,6 @@ async function main(){
             password: logPassword.value
           })
         })
-        serverErrorTemplate(`POST - ${response.url} - ${response.statusText}`)
         if (response.status === 401) {
           toast("Error de autenticacion", "#f75e25", "#ff4000")
         } else {

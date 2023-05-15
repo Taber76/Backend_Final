@@ -7,6 +7,7 @@ async function userLogged() { //verifica si hay usuario logeeado
     return null
   }
   userData = await response.json()
+  console.log('loggeado', userData)
     return userData
 }
 
@@ -57,15 +58,17 @@ async function cartView( userData, productsData ) { // muestra el carrito del us
 
 
 
-async function userLogout( user ){ // cierra sesion de usuario
+async function userLogout( userData ){ // cierra sesion de usuario
   fetch(`http://localhost:${location.port}/session/logout/`, {
     method: 'POST',
+    headers: {
+      'authorization': `Bearer ${userData.token}`
+    }
   })
   .then((response) => response.json())
   .then((data) => {
-    console.log(data.message)
   })
-  document.querySelector('#sessionUser').innerHTML = logByeTemplate( user )
+  document.querySelector('#sessionUser').innerHTML = logByeTemplate( userData.username )
   await setTimeout(() => {
     location.reload()
   }, 2000)
@@ -96,7 +99,7 @@ function logged( userData, productsData ){ //ejecuta las acciones necesarias lue
   })
 
   document.getElementById("logoutBtn").addEventListener("click", ev => {
-    userLogout( userData.username )
+    userLogout( userData )
   })
 
   document.getElementById("cartBtn").addEventListener("click", ev => {

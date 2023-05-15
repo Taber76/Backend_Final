@@ -12,9 +12,7 @@ const {
  
 const { logger, loggererr } = require('../log/logger')
 const passport = require('../middlewares/auth')
-
-const { addProducts } = require('../test/auxfunction') 
-
+const { isInBlackListJWT } = require('../middlewares/blackList')
 
 
 /* ------------------ router productos ----------------- */
@@ -76,6 +74,7 @@ productRouter.get(
 //--------------------- post producto
 productRouter.post(
   '/productos/nuevo',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -99,6 +98,7 @@ productRouter.post(
 //---------------------- put producto
 productRouter.put(
   '/productos/:id',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -121,6 +121,7 @@ productRouter.put(
 //------------------------- delete producto
 productRouter.delete(
   '/productos/:id',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -139,16 +140,6 @@ productRouter.delete(
     }
   }
 ) 
-
-
-//---------------- Test
-productRouter.post(
-  '/productos-test-add/:number',
-  async (req, res) => {
-    addProducts(req.params.number)
-    res.json({ message: 'productos agregados'})
-  }
-)
 
 
 module.exports = productRouter

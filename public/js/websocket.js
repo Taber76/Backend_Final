@@ -5,12 +5,14 @@ function chatInit( username ) {
   document.querySelector('#userChat').innerHTML = templateContainer()
   socket.emit('online', username)
   socket.on('mensajes', allChat => {
-    document.querySelector('#chatContainer').innerHTML = chatMessages( allChat )})
+    document.querySelector('#chatContainer').innerHTML = chatMessages( allChat )
+    chatMsg.value = ''
+  })
 
   const chatMsg = document.querySelector('#chatUserMessage')
   document.querySelector('#sendChat').addEventListener("click", ev => {
     socket.emit('mensaje', { username: username, body: chatMsg.value })
-    chatMsg.value = ''
+    chatMsg.value = 'asistente escribiendo ...'
   })
 
 }

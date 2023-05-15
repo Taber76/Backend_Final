@@ -17,8 +17,6 @@ module.exports.usersessiontime = process.env.USERSESSIONTIME
 module.exports.jwtsecretkey = process.env.JWTSECRETKEY
 module.exports.jwtexpires = process.env.JWTEXPIRES
 
-module.exports.firebaseurl = process.env.FIREBASEURL
-
 module.exports.emailservice = process.env.EMAILSERVICE
 module.exports.emailport = process.env.EMAILPORT
 module.exports.emailuser = process.env.EMAILUSER
@@ -31,6 +29,5 @@ module.exports.msgaccountsid = process.env.MSGACCOUNTSID
 module.exports.msgauthtoken = process.env.MSGAUTHTOKEN
 
 module.exports.persistence = process.env.PERSISTENCE
-module.exports.node_env = process.env.NODE_ENV
 
 module.exports.gptapikey = process.env.GPTAPIKEY

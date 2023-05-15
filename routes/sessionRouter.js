@@ -3,9 +3,24 @@ const sessionRouter = Router()
 
 const passport = require('../middlewares/auth')
 const { generateJwtToken } = require('../middlewares/auth')
+const { addBlackListJWT } = require('../middlewares/blackList')
 
 const { logger, loggererr } = require('../log/logger')
 const { addUserController, getUserController } = require('../controllers/usersController')
+
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: './public/uploads',
+  filename: function (req, file, cb) {
+    cb( null, req.params.id + '.' + file.originalname.split('.').pop())
+  }
+})
+const upload = multer ({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 }
+})
+
+
 
 
 /* ------------------ router session ----------------- */
@@ -49,18 +64,6 @@ sessionRouter.post(
 )
 
 
-
-//--------------------- post login/register user with google
-sessionRouter.post(
-  '/logingoogle', 
-  passport.authenticate('googleauth'),
-  function(_, res) {
-    logger.info(`Autenticacion con Google exitosa`)
-    res.status(200).send({ message: 'Autenticación exitosa.' })
-  }
-)
-
-
 //--------------------- post Register user
 sessionRouter.post(
   '/register',
@@ -84,11 +87,20 @@ sessionRouter.post(
   }
 )
 
+sessionRouter.post(
+  '/register/img/:id',
+  upload.single('userFileImage'),
+  (req, res) => {
+    res.status(200)
+  }
+)
+
 
 //------------ post cerrar sesion
 sessionRouter.post(
   '/logout',
   async (req, res) => {
+    addBlackListJWT( req.headers.authorization)
     req.session.destroy((err) => {
       if (err) {
         loggererr.error(`No se ha podido cerrar la sesion, error: ${err}`)

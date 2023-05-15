@@ -1,5 +1,5 @@
 const connectToDb = require('../config/connectToMongo')
-const { chatModel } = require('../schemas/mongoDbModel')
+const { chatModel } = require('../models/mongoDbModel')
 
 
 const { logger, loggererr } = require('../log/logger')

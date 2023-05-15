@@ -257,17 +257,3 @@ function registerNewUserTemplate () { // --- Dialogo de ingreso de datos de regi
   </div>
   `
 }
-
-
-function serverErrorTemplate ( msg ) { // ---- Mensaje de error
-  document.querySelector('#serverMsg').innerHTML = `
-  <div class="container>
-    <div class="row">
-      <div class="col mb-3">  
-        <h6>Mensaje del servidor: <span class="badge bg-secondary">${msg}</span></h6>
-      </div>
-    </div>
-  </div>
-  `
-  return 
-}

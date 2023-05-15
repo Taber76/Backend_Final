@@ -1,5 +1,5 @@
 const connectToDb = require('../config/connectToMongo')
-const { userModel, cartModel } = require('../schemas/mongoDbModel')
+const { userModel, cartModel } = require('../models/mongoDbModel')
 
 const { logger, loggererr } = require('../log/logger')
 const bcrypt = require('bcrypt')

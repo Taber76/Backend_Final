@@ -378,3 +378,4 @@
 [2023-05-12T13:15:02.523] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
 [2023-05-12T13:16:17.532] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
 [2023-05-12T13:16:27.811] [ERROR] default - Error starting server: TypeError: Router.use() requires a middleware function but got a Object
+[2023-05-15T08:09:38.582] [WARN] default - Error: Error: Request failed with status code 401 al intentar agregar el mensaje.

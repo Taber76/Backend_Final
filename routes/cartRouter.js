@@ -4,13 +4,13 @@ const cartRouter = Router()
 const { getCartController, addProductToCartController, delProductFromCartController, delCartController, newOrderController } = require('../controllers/cartController')
 const { logger, loggererr } = require('../log/logger')
 const passport = require('../middlewares/auth')
-
-
+const { isInBlackListJWT } = require('../middlewares/blackList')
 
 /* ------------------ router cart ----------------- */
 //------------- get user cart
 cartRouter.get(
   '/carrito',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -27,6 +27,7 @@ cartRouter.get(
 //------------- add product to cart
 cartRouter.post(
   '/carrito',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -43,6 +44,7 @@ cartRouter.post(
 //------------- delete product from cart
 cartRouter.delete(
   '/carrito/:id',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -60,6 +62,7 @@ cartRouter.delete(
 //------------- delete cart
 cartRouter.delete(
   '/carrito',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -77,6 +80,7 @@ cartRouter.delete(
 //------------- new order
 cartRouter.post(
   '/carrito/order',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {

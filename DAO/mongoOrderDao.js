@@ -1,5 +1,5 @@
 const connectToDb = require('../config/connectToMongo')
-const { orderModel } = require('../schemas/mongoDbModel')
+const { orderModel } = require('../models/mongoDbModel')
 
 const { logger, loggererr } = require('../log/logger')
 

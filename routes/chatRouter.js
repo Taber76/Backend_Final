@@ -4,6 +4,7 @@ const chatRouter = Router()
 const { getAllByUserController, addMessageController } = require('../controllers/chatsController')
 const { logger, loggererr } = require('../log/logger')
 const passport = require('../middlewares/auth')
+const { isInBlackListJWT } = require('../middlewares/blackList')
 
 
 /* ------------------ router chat ----------------- */
@@ -11,6 +12,7 @@ const passport = require('../middlewares/auth')
 //------------- get user chat
 chatRouter.get(
   '/chat/:username',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -27,6 +29,7 @@ chatRouter.get(
 //------------- add message
 chatRouter.post(
   '/chat/:msg',
+  isInBlackListJWT,
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
